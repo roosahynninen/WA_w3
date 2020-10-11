@@ -3,19 +3,59 @@
   <head>
     <title>Tic Tac Toe</title>
     <meta charset="UTF-8" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"
+    />
+    <link rel="stylesheet" href="src/styles.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
   </head>
 
   <body>
     <h1>Tic Tac Toe</h1>
     <div>Player 1 is x</div>
     <div>Player 2 is o</div>
-    <div id="board"></div>
-    <br>
-      <div class="w3-border" style="width:304px;">
-          <div class="w3-grey" style="height:12px;width:0%;"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col s2"></div>
+        <div class="col s2"></div>
+        <div class="col s2"></div>
+        <div class="col s2"></div>
+        <div class="col s2"></div>
+      </div>
+      <div class="row">
+        <div class="col s2"></div>
+        <div class="col s2"></div>
+        <div class="col s2"></div>
+        <div class="col s2"></div>
+        <div class="col s2"></div>
+      </div>
+      <div class="row">
+        <div class="col s2"></div>
+        <div class="col s2"></div>
+        <div class="col s2"></div>
+        <div class="col s2"></div>
+        <div class="col s2"></div>
+      </div>
+      <div class="row">
+        <div class="col s2"></div>
+        <div class="col s2"></div>
+        <div class="col s2"></div>
+        <div class="col s2"></div>
+        <div class="col s2"></div>
+      </div>
+      <div class="row">
+        <div class="col s2"></div>
+        <div class="col s2"></div>
+        <div class="col s2"></div>
+        <div class="col s2"></div>
+        <div class="col s2"></div>
+      </div>
+      <br />
+      <div class="progress">
+        <div class="determinate" style="width: 0%;"></div>
       </div>
     </div>
-    <p id="time"></p>
     <script src="src/index.js"></script>
   </body>
 </html>

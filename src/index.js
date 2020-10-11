@@ -3,51 +3,23 @@ import "./styles.css";
 document.getElementById("board").innerHTML = ``;
 
 var count = 0;
-var timeleft;
 var timer;
-var end_turn;
-var counter = 0;
+var id;
 
-var board = document.getElementById("board");
-var bar = document.getElementsByClassName("w3-grey")[0];
-
-function createTable() {
-  var table = document.createElement("table");
-
-  for (var r = 0; r < 5; r++) {
-    var table_row = table.insertRow();
-    for (var c = 0; c < 5; c++) {
-      var table_cell = table_row.insertCell();
-      var cell_text = document.createTextNode("");
-      table_cell.appendChild(cell_text);
-    }
-  }
-  board.appendChild(table);
-  onClick(table);
-}
-
-function onClick(table) {
-  for (var tab = 0; tab < table.rows.length; tab++) {
-    for (var i = 0; i < table.rows[tab].cells.length; i++) {
-      table.rows[tab].cells[i].onclick = function () {
-        fillCell(table, this);
-      };
-    }
-  }
+var square = document.querySelectorAll(".col");
+for (var i = 0; i < square.length; i++) {
+  square[i].addEventListener("click", function () {
+    fillCell(this);
+  });
 }
 
 function fillCell(table, table_cell) {
   count++;
-  changeTurn();
+  barMove();
   if (count % 2 === 0) {
     if (table_cell.innerHTML === "") {
       table_cell.innerHTML = "o";
       table_cell.style.backgroundColor = "rgb(250, 128, 114)";
-      countdownTime();
-      counter++;
-      var percent = counter / 25;
-      var bar_percent = percent * 100;
-      bar.style.width = bar_percent + "%";
     } else {
       alert("This cell is already taken");
       count--;
@@ -56,16 +28,12 @@ function fillCell(table, table_cell) {
     if (table_cell.innerHTML === "") {
       table_cell.innerHTML = "x";
       table_cell.style.backgroundColor = "rgb(124, 252, 0)";
-      countdownTime();
-      counter++;
-      var percent = counter / 25;
-      var bar_percent = percent * 100;
-      bar.style.width = bar_percent + "%";
     } else {
       alert("This cell is already taken");
       count--;
     }
   }
+  timeOut();
   checkWin(table);
   checkDraw(table);
 }
@@ -88,43 +56,107 @@ function checkWin(table) {
     var dia2 = 0;
 
     for (var tab = 0; tab < 5; tab++) {
-      if (table.rows[tab].cells[0].innerHTML === mark[i]) {
+      if (square[tab].innerHTML === mark[i]) {
         lin1++;
+        if (tab === 0) {
+          hor1++;
+          dia1++;
+        }
+        if (tab === 0) {
+          hor2++;
+        }
+        if (tab === 0) {
+          hor3++;
+        }
+        if (tab === 0) {
+          hor4++;
+        }
+        if (tab === 0) {
+          hor5++;
+          dia2++;
+        }
       }
-      if (table.rows[tab].cells[1].innerHTML === mark[i]) {
+      if (square[tab + 5].innerHTML === mark[i]) {
         lin2++;
+        if (tab === 0) {
+          hor1++;
+        }
+        if (tab === 0) {
+          hor2++;
+          dia1++;
+        }
+        if (tab === 0) {
+          hor3++;
+        }
+        if (tab === 0) {
+          hor4++;
+          dia2++;
+        }
+        if (tab === 0) {
+          hor5++;
+        }
       }
-      if (table.rows[tab].cells[2].innerHTML === mark[i]) {
+      if (square[tab + 10].innerHTML === mark[i]) {
         lin3++;
+        if (tab === 0) {
+          hor1++;
+        }
+        if (tab === 0) {
+          hor2++;
+        }
+        if (tab === 0) {
+          hor3++;
+          dia1++;
+          dia2++;
+        }
+        if (tab === 0) {
+          hor4++;
+        }
+        if (tab === 0) {
+          hor5++;
+        }
       }
-      if (table.rows[tab].cells[3].innerHTML === mark[i]) {
+      if (square[tab + 15].innerHTML === mark[i]) {
         lin4++;
+        if (tab === 0) {
+          hor1++;
+        }
+        if (tab === 0) {
+          hor2++;
+          dia2++;
+        }
+        if (tab === 0) {
+          hor3++;
+        }
+        if (tab === 0) {
+          hor4++;
+          dia1++;
+        }
+        if (tab === 0) {
+          hor5++;
+        }
       }
-      if (table.rows[tab].cells[4].innerHTML === mark[i]) {
+      if (square[tab + 20].innerHTML === mark[i]) {
         lin5++;
+        if (tab === 0) {
+          hor1++;
+          dia2++;
+        }
+        if (tab === 0) {
+          hor2++;
+        }
+        if (tab === 0) {
+          hor3++;
+        }
+        if (tab === 0) {
+          hor4++;
+        }
+        if (tab === 0) {
+          hor5++;
+          dia1++;
+        }
       }
-      if (table.rows[0].cells[tab].innerHTML === mark[i]) {
-        hor1++;
-      }
-      if (table.rows[1].cells[tab].innerHTML === mark[i]) {
-        hor2++;
-      }
-      if (table.rows[2].cells[tab].innerHTML === mark[i]) {
-        hor3++;
-      }
-      if (table.rows[3].cells[tab].innerHTML === mark[i]) {
-        hor4++;
-      }
-      if (table.rows[4].cells[tab].innerHTML === mark[i]) {
-        hor5++;
-      }
-      if (table.rows[tab].cells[tab].innerHTML === mark[i]) {
-        dia1++;
-      }
-      var reverse = 4 - tab;
-      if (table.rows[tab].cells[reverse].innerHTML === mark[i]) {
-        dia2++;
-      }
+
       if (
         lin1 === 5 ||
         lin2 === 5 ||
@@ -145,7 +177,7 @@ function checkWin(table) {
         if (mark[i] === "o") {
           alert("Player 2 won!");
         }
-        clearTable(table);
+        empty();
       }
     }
   }
@@ -153,63 +185,45 @@ function checkWin(table) {
 
 function checkDraw(table) {
   var draw_count = 0;
-
-  for (var tab = 0; tab < table.rows.length; tab++) {
-    for (var i = 0; i < table.rows[tab].cells.length; i++) {
-      if (
-        table.rows[tab].cells[i].innerHTML === "x" ||
-        table.rows[tab].cells[i].innerHTML === "o"
-      ) {
-        draw_count++;
-      }
+  for (var i = 0; i < square.length; i++) {
+    if (square[i].innerHTML === "x" || square[i].innerHTML === "o") {
+      draw_count++;
     }
   }
   if (draw_count === 25) {
     alert("It's a draw!");
-    clearTable(table);
+    empty();
   }
 }
 
-function clearTable(table) {
-  for (var tab = 0; tab < table.rows.length; tab++) {
-    for (var i = 0; i < table.rows[tab].cells.length; i++) {
-      table.rows[tab].cells[i].innerHTML = "";
-      table.rows[tab].cells[i].style.backgroundColor = "rgb(255, 255, 255)";
-    }
+function empty() {
+  for (var i = 0; i < square.length; i++) {
+    square[i].innerHTML = "";
+    square[i].style.backgroundColor = "rgb(255, 255, 255)";
   }
-  bar.style.width = "0%";
-  count = 0;
-  counter = 0;
+  clearTimeout(timer);
 }
 
-function changeTurn() {
-  timeleft = 10;
-  clearInterval(timer);
-
-  timer = setInterval(function () {
-    if (timeleft === 0) {
-      clearInterval(timer);
+function barMove() {
+  clearInterval(id);
+  var bar = document.querySelector(".determinate");
+  var width = 0;
+  id = setInterval(frame, 100);
+  function frame() {
+    if (width >= 100) {
+      clearInterval(id);
     } else {
-      document.getElementById("time").innerHTML = "Time left: " + timeleft;
-      timeleft--;
+      width++;
+      bar.style.width = width + "%";
     }
-  }, 1000);
-  nullEndTurn();
+  }
 }
 
-function countdownTime() {
-  end_turn = setTimeout(endTurn, 10000);
+function timeOut() {
+  clearTimeout(timer);
+  timer = setTimeout(timeAlert, 10000);
+  function timeAlert() {
+    count++;
+    alert("Time is over, your turn ends");
+  }
 }
-
-function endTurn() {
-  alert("Time is over, your turn ends");
-  count++;
-  changeTurn();
-  countdownTime();
-}
-
-function nullEndTurn() {
-  clearTimeout(end_turn);
-}
-
-createTable();

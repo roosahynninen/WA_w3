@@ -1,17 +1,17 @@
 body {
   font-family: sans-serif;
+  text-align: center;
 }
-table {
-  border-collapse: collapse;
-  border: 1px solid black;
+
+.row {
+  margin: 0;
 }
-tr,
-td {
+
+.col {
   border: 1px solid black;
+  font: helvetica;
   height: 60px;
-  width: 60px;
+  font-size: 30px;
   text-align: center;
   vertical-align: center;
-  font-family: Helvetica;
-  font-size: 30px;
 }
