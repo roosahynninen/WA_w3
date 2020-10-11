@@ -1,7 +1,5 @@
 import "./styles.css";
 
-document.getElementById("board").innerHTML = ``;
-
 var count = 0;
 var timer;
 var id;
@@ -13,7 +11,7 @@ for (var i = 0; i < square.length; i++) {
   });
 }
 
-function fillCell(table, table_cell) {
+function fillCell(table_cell) {
   count++;
   barMove();
   if (count % 2 === 0) {
@@ -34,11 +32,11 @@ function fillCell(table, table_cell) {
     }
   }
   timeOut();
-  checkWin(table);
-  checkDraw(table);
+  checkWin();
+  checkDraw();
 }
 
-function checkWin(table) {
+function checkWin() {
   var mark = ["x", "o"];
 
   for (var i = 0; i < 2; i++) {
@@ -183,7 +181,7 @@ function checkWin(table) {
   }
 }
 
-function checkDraw(table) {
+function checkDraw() {
   var draw_count = 0;
   for (var i = 0; i < square.length; i++) {
     if (square[i].innerHTML === "x" || square[i].innerHTML === "o") {
